@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+//import { getStorage } from 'firebase/storage';
 
 // Sua configuração do Firebase (utilizando variáveis de ambiente)
 const firebaseConfig = {
@@ -20,6 +20,6 @@ const app = initializeApp(firebaseConfig);
 // Inicializar os serviços do Firebase
 const auth = getAuth(app);
 const db = getFirestore(app);
-const storage = getStorage(app);
+//const storage = getStorage(app);
 
-export { app, auth, db, storage };
+export { app, auth, db, /*storage*/ };

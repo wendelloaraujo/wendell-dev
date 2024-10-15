@@ -1,4 +1,3 @@
-// src/components/LogoutButton.tsx
 'use client';
 
 import { signOut } from 'firebase/auth';
@@ -11,7 +10,7 @@ export default function LogoutButton() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push('/login');
+      router.push('/');
     } catch (error) {
       console.error('Erro ao fazer logout:', error);
     }
