@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Arquivos de ambiente
+.env.local
+
+# Pastas e arquivos padrão
+node_modules
+.next
