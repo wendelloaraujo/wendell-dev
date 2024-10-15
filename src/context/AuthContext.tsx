@@ -1,43 +1,37 @@
+// src/context/AuthContext.tsx
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth, db } from '@/firebase/firebaseConfig';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 
-interface AuthContextProps {
+interface AuthContextType {
   user: User | null;
   loading: boolean;
   role: string | null;
 }
 
-const AuthContext = createContext<AuthContextProps>({
+const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
   role: null,
 });
 
-export const useAuth = () => useContext(AuthContext);
-
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [role, setRole] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      setUser(firebaseUser);
       if (firebaseUser) {
-        setUser(firebaseUser);
-
-        // Obter o papel do usuário no Firestore
         const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
         if (userDoc.exists()) {
-          setRole(userDoc.data().role || 'student');
-        } else {
-          setRole('student');
+          setRole(userDoc.data().role);
         }
       } else {
-        setUser(null);
         setRole(null);
       }
       setLoading(false);
@@ -52,3 +46,5 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);

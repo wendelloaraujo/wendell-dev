@@ -1,4 +1,4 @@
-// src/app/dashboard/courses/edit/[id]/modules/page.tsx
+// src/app/dashboard/courses/edit/[courseId]/modules/page.tsx
 'use client';
 
 import AdminRoute from '@/components/AdminRoute';
@@ -18,7 +18,7 @@ export default function EditModules() {
   const [newModuleTitle, setNewModuleTitle] = useState('');
   const router = useRouter();
   const params = useParams();
-  const courseId = params?.id as string;
+  const courseId = params?.courseId as string;
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -68,10 +68,12 @@ export default function EditModules() {
             onChange={(e) => setNewModuleTitle(e.target.value)}
             placeholder="Título do Novo Módulo"
             className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 mb-2"
+            style={{ backgroundColor: 'var(--background-color)', color: 'var(--foreground-color)' }}
           />
           <button
             onClick={handleAddModule}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300"
+            className="px-4 py-2 rounded hover:bg-green-700 transition duration-300"
+            style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--foreground-color)' }}
           >
             Adicionar Módulo
           </button>
@@ -82,13 +84,17 @@ export default function EditModules() {
               <span>{module.title}</span>
               <div>
                 <Link href={`/dashboard/courses/edit/${courseId}/modules/${module.id}/lessons`}>
-                  <button className="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition duration-300 mr-2">
+                  <button
+                    className="px-2 py-1 rounded hover:bg-blue-700 transition duration-300 mr-2"
+                    style={{ backgroundColor: 'var(--primary-color)', color: 'var(--foreground-color)' }}
+                  >
                     Gerenciar Lições
                   </button>
                 </Link>
                 <button
                   onClick={() => handleDeleteModule(module.id)}
-                  className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition duration-300"
+                  className="px-2 py-1 rounded hover:bg-red-700 transition duration-300"
+                  style={{ backgroundColor: 'red', color: 'var(--foreground-color)' }}
                 >
                   Excluir
                 </button>

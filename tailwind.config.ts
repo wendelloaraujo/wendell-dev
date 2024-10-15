@@ -2,21 +2,12 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: 'class', // Usa a classe 'dark' para o modo escuro
   content: [
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx}', // Ajuste o caminho conforme seu projeto
   ],
   theme: {
-    extend: {
-      colors: {
-        primary: {
-          light: '#6EC1E4',
-          DEFAULT: '#2196F3',
-          dark: '#1E88E5',
-        },
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };

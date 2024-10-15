@@ -1,4 +1,4 @@
-// src/app/my-courses/[id]/page.tsx
+// src/app/my-courses/[courseId]/page.tsx
 'use client';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -23,33 +23,33 @@ interface Lesson {
 
 export default function CourseContent() {
   const params = useParams();
-  const id = params?.id as string;
+  const courseId = params?.courseId as string;
   const { user } = useAuth();
   const [modules, setModules] = useState<Module[]>([]);
   const [courseTitle, setCourseTitle] = useState('');
 
   useEffect(() => {
     const fetchCourseContent = async () => {
-      if (user && id) {
+      if (user && courseId) {
         // Verificar se o usuário está inscrito no curso
-        const enrollmentDoc = await getDoc(doc(db, `users/${user.uid}/enrollments`, id));
+        const enrollmentDoc = await getDoc(doc(db, `users/${user.uid}/enrollments`, courseId));
         if (!enrollmentDoc.exists()) {
           alert('Você não está inscrito neste curso.');
           return;
         }
 
         // Obter dados do curso
-        const courseDoc = await getDoc(doc(db, 'courses', id));
+        const courseDoc = await getDoc(doc(db, 'courses', courseId));
         if (courseDoc.exists()) {
           setCourseTitle(courseDoc.data()?.title || '');
         }
 
         // Obter módulos do curso
-        const modulesSnapshot = await getDocs(collection(db, `courses/${id}/modules`));
+        const modulesSnapshot = await getDocs(collection(db, `courses/${courseId}/modules`));
         const modulesData = await Promise.all(
           modulesSnapshot.docs.map(async (moduleDoc) => {
             const lessonsSnapshot = await getDocs(
-              collection(db, `courses/${id}/modules/${moduleDoc.id}/lessons`)
+              collection(db, `courses/${courseId}/modules/${moduleDoc.id}/lessons`)
             );
             const lessonsData = lessonsSnapshot.docs.map((lessonDoc) => ({
               id: lessonDoc.id,
@@ -67,20 +67,20 @@ export default function CourseContent() {
     };
 
     fetchCourseContent();
-  }, [user, id]);
+  }, [user, courseId]);
 
   return (
     <ProtectedRoute>
       <div className="container mx-auto px-6 py-20">
-        <h1 className="text-3xl font-bold mb-6">{courseTitle}</h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">{courseTitle}</h1>
         {modules.map((module) => (
           <div key={module.id} className="mb-6">
             <h2 className="text-2xl font-semibold mb-4">{module.title}</h2>
             <ul className="list-disc list-inside">
               {module.lessons.map((lesson) => (
                 <li key={lesson.id} className="mb-2">
-                  <Link href={`/my-courses/${id}/modules/${module.id}/lessons/${lesson.id}`}>
-                    <span className="text-blue-600 hover:text-blue-700 cursor-pointer">
+                  <Link href={`/my-courses/${courseId}/modules/${module.id}/lessons/${lesson.id}`}>
+                    <span className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer">
                       {lesson.title}
                     </span>
                   </Link>

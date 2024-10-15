@@ -1,23 +1,75 @@
+/* src/app/globals.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+/* Configuração de cores */
+@layer base {
+  /* Modo Claro */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-primary: #007BFF;
+    --color-secondary: #0056b3;
+    --color-text: #212529;
+    --color-text-secondary: #6C757D;
+    --color-background: #FFFFFF;
+    --color-surface: #F8F9FA;
+    --color-card-background: #FFFFFF;
+    --color-card-text: #212529;
+  }
+
+  /* Modo Escuro */
+  .dark {
+    --color-primary: #007BFF;
+    --color-secondary: #66B2FF;
+    --color-text: #F8F9FA;
+    --color-text-secondary: #CED4DA;
+    --color-background: #343A40;
+    --color-surface: #495057;
+    --color-card-background: #495057;
+    --color-card-text: #F8F9FA;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  a {
+    color: var(--color-primary);
+    transition: color 0.3s;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text);
+  }
+
+  p {
+    color: var(--color-text-secondary);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Botões */
+  .btn {
+    @apply px-4 py-2 rounded font-medium transition-colors duration-300;
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+  }
+
+  .btn:hover {
+    background-color: var(--color-secondary);
+  }
+
+  /* Cards */
+  .card {
+    @apply p-4 rounded-lg shadow-md;
+    background-color: var(--color-card-background);
+    color: var(--color-card-text);
+    transition: background-color 0.3s, color 0.3s;
+  }
 }
 
 @layer utilities {
@@ -25,5 +77,3 @@ body {
     text-wrap: balance;
   }
 }
-
-
