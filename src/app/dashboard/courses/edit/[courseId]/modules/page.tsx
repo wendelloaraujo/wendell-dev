@@ -1,4 +1,3 @@
-// src/app/dashboard/courses/edit/[courseId]/modules/page.tsx
 'use client';
 
 import AdminRoute from '@/components/AdminRoute';
@@ -7,6 +6,7 @@ import { db } from '@/firebase/firebaseConfig';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 interface Module {
   id: string;
@@ -59,50 +59,69 @@ export default function EditModules() {
 
   return (
     <AdminRoute>
-      <div className="container mx-auto px-6 py-20">
-        <h1 className="text-3xl font-bold mb-6">Editar Módulos</h1>
-        <div className="mb-4">
+      <motion.div
+        className="container mx-auto px-6 py-20"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h1 className="text-4xl font-bold text-white mb-6">Editar Módulos</h1>
+        
+        {/* Adicionar Novo Módulo */}
+        <motion.div
+          className="mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
           <input
             type="text"
             value={newModuleTitle}
             onChange={(e) => setNewModuleTitle(e.target.value)}
             placeholder="Título do Novo Módulo"
-            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 mb-2"
-            style={{ backgroundColor: 'var(--background-color)', color: 'var(--foreground-color)' }}
+            className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-600 mb-4"
           />
-          <button
+          <motion.button
             onClick={handleAddModule}
-            className="px-4 py-2 rounded hover:bg-green-700 transition duration-300"
-            style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--foreground-color)' }}
+            className="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition duration-300"
+            whileHover={{ scale: 1.05 }}
           >
             Adicionar Módulo
-          </button>
-        </div>
-        <ul>
+          </motion.button>
+        </motion.div>
+
+        {/* Listagem de Módulos */}
+        <ul className="space-y-4">
           {modules.map((module) => (
-            <li key={module.id} className="mb-2 flex justify-between items-center">
-              <span>{module.title}</span>
-              <div>
+            <motion.li
+              key={module.id}
+              className="flex justify-between items-center bg-gray-800 p-4 rounded-lg shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <span className="text-white text-lg">{module.title}</span>
+              <div className="flex space-x-4">
                 <Link href={`/dashboard/courses/edit/${courseId}/modules/${module.id}/lessons`}>
-                  <button
-                    className="px-2 py-1 rounded hover:bg-blue-700 transition duration-300 mr-2"
-                    style={{ backgroundColor: 'var(--primary-color)', color: 'var(--foreground-color)' }}
+                  <motion.button
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300"
+                    whileHover={{ scale: 1.05 }}
                   >
                     Gerenciar Lições
-                  </button>
+                  </motion.button>
                 </Link>
-                <button
+                <motion.button
                   onClick={() => handleDeleteModule(module.id)}
-                  className="px-2 py-1 rounded hover:bg-red-700 transition duration-300"
-                  style={{ backgroundColor: 'red', color: 'var(--foreground-color)' }}
+                  className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300"
+                  whileHover={{ scale: 1.05 }}
                 >
                   Excluir
-                </button>
+                </motion.button>
               </div>
-            </li>
+            </motion.li>
           ))}
         </ul>
-      </div>
+      </motion.div>
     </AdminRoute>
   );
 }

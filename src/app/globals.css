@@ -1,33 +1,19 @@
 /* src/app/globals.css */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Configuração de cores */
+/* Configuração de cores para o modo escuro */
 @layer base {
-  /* Modo Claro */
   :root {
-    --color-primary: #007BFF;
-    --color-secondary: #0056b3;
-    --color-text: #212529;
-    --color-text-secondary: #6C757D;
-    --color-background: #FFFFFF;
-    --color-surface: #F8F9FA;
-    --color-card-background: #FFFFFF;
-    --color-card-text: #212529;
-  }
-
-  /* Modo Escuro */
-  .dark {
-    --color-primary: #007BFF;
-    --color-secondary: #66B2FF;
-    --color-text: #F8F9FA;
-    --color-text-secondary: #CED4DA;
-    --color-background: #343A40;
-    --color-surface: #495057;
-    --color-card-background: #495057;
-    --color-card-text: #F8F9FA;
+    --color-primary: #007BFF; /* Azul principal */
+    --color-secondary: #66B2FF; /* Variante de azul */
+    --color-background: #121212; /* Fundo escuro */
+    --color-surface: #1E1E1E; /* Superfícies escuras */
+    --color-text: #F8F9FA; /* Texto claro */
+    --color-text-secondary: #BDBDBD; /* Texto secundário */
+    --color-card-background: #1E1E1E; /* Fundo dos cards */
+    --color-card-text: #F8F9FA; /* Texto dos cards */
   }
 
   body {
@@ -69,11 +55,5 @@
     background-color: var(--color-card-background);
     color: var(--color-card-text);
     transition: background-color 0.3s, color 0.3s;
-  }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
   }
 }

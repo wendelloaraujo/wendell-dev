@@ -1,4 +1,3 @@
-// src/app/my-courses/[courseId]/page.tsx
 'use client';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -8,6 +7,7 @@ import { db } from '@/firebase/firebaseConfig';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 interface Module {
   id: string;
@@ -72,22 +72,35 @@ export default function CourseContent() {
   return (
     <ProtectedRoute>
       <div className="container mx-auto px-6 py-20">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">{courseTitle}</h1>
-        {modules.map((module) => (
-          <div key={module.id} className="mb-6">
-            <h2 className="text-2xl font-semibold mb-4">{module.title}</h2>
+        <motion.h1
+          className="text-4xl font-bold mb-6 text-white"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          {courseTitle}
+        </motion.h1>
+        {modules.map((module, index) => (
+          <motion.div
+            key={module.id}
+            className="mb-6 bg-gray-800 p-6 rounded-lg shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2, duration: 0.6 }}
+          >
+            <h2 className="text-2xl font-semibold mb-4 text-white">{module.title}</h2>
             <ul className="list-disc list-inside">
               {module.lessons.map((lesson) => (
                 <li key={lesson.id} className="mb-2">
                   <Link href={`/my-courses/${courseId}/modules/${module.id}/lessons/${lesson.id}`}>
-                    <span className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer">
+                    <span className="text-blue-400 hover:underline cursor-pointer">
                       {lesson.title}
                     </span>
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         ))}
       </div>
     </ProtectedRoute>

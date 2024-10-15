@@ -1,4 +1,3 @@
-// src/app/dashboard/courses/edit/[courseId]/modules/[moduleId]/lessons/page.tsx
 'use client';
 
 import AdminRoute from '@/components/AdminRoute';
@@ -6,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { db } from '@/firebase/firebaseConfig';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { useRouter, useParams } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 interface Lesson {
   id: string;
@@ -65,43 +65,65 @@ export default function ManageLessons() {
 
   return (
     <AdminRoute>
-      <div className="container mx-auto px-6 py-20">
-        <h1 className="text-3xl font-bold mb-6">Gerenciar Lições</h1>
-        <div className="mb-4">
+      <motion.div
+        className="container mx-auto px-6 py-20"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h1 className="text-4xl font-bold text-white mb-6">Gerenciar Lições</h1>
+
+        {/* Adicionar Nova Lição */}
+        <motion.div
+          className="mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
           <input
             type="text"
             value={newLessonTitle}
             onChange={(e) => setNewLessonTitle(e.target.value)}
             placeholder="Título da Nova Lição"
-            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 mb-2"
+            className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-600 mb-2"
           />
           <textarea
             value={newLessonContent}
             onChange={(e) => setNewLessonContent(e.target.value)}
             placeholder="Conteúdo da Nova Lição"
-            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 mb-2"
+            className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-600 mb-2"
           ></textarea>
-          <button
+          <motion.button
             onClick={handleAddLesson}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300"
+            className="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition duration-300"
+            whileHover={{ scale: 1.05 }}
           >
             Adicionar Lição
-          </button>
-        </div>
-        <ul>
+          </motion.button>
+        </motion.div>
+
+        {/* Lista de Lições */}
+        <ul className="space-y-4">
           {lessons.map((lesson) => (
-            <li key={lesson.id} className="mb-2 flex justify-between items-center">
-              <span>{lesson.title}</span>
-              <button
+            <motion.li
+              key={lesson.id}
+              className="flex justify-between items-center bg-gray-800 p-4 rounded-lg shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <span className="text-white text-lg">{lesson.title}</span>
+              <motion.button
                 onClick={() => handleDeleteLesson(lesson.id)}
-                className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition duration-300"
+                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300"
+                whileHover={{ scale: 1.05 }}
               >
                 Excluir
-              </button>
-            </li>
+              </motion.button>
+            </motion.li>
           ))}
         </ul>
-      </div>
+      </motion.div>
     </AdminRoute>
   );
 }

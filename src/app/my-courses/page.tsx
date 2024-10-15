@@ -1,4 +1,3 @@
-// src/app/my-courses/page.tsx
 'use client';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -44,28 +43,37 @@ export default function MyCourses() {
   return (
     <ProtectedRoute>
       <div className="container mx-auto px-6 py-20">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Meus Cursos</h1>
+        <h1 className="text-4xl font-bold mb-6 text-white">Meus Cursos</h1>
         {courses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {courses.map((course, index) => (
               <motion.div
                 key={course.id}
-                className="card"
+                className="bg-gray-800 p-6 rounded-lg shadow-lg"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
-                <p className="mb-4">{course.description}</p>
-                <p className="mb-2">Progresso: {course.progress || 0}%</p>
+                <h2 className="text-2xl font-semibold mb-2 text-white">
+                  {course.title}
+                </h2>
+                <p className="mb-4 text-gray-400">{course.description}</p>
+                <p className="mb-2 text-gray-400">
+                  Progresso: {course.progress || 0}%
+                </p>
                 <Link href={`/my-courses/${course.id}`}>
-                  <button className="btn">Acessar Curso</button>
+                  <motion.button
+                    className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition duration-300"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    Acessar Curso
+                  </motion.button>
                 </Link>
               </motion.div>
             ))}
           </div>
         ) : (
-          <p>Você ainda não está inscrito em nenhum curso.</p>
+          <p className="text-white">Você ainda não está inscrito em nenhum curso.</p>
         )}
       </div>
     </ProtectedRoute>

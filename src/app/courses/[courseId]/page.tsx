@@ -1,4 +1,3 @@
-// src/app/courses/[courseId]/page.tsx
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -7,6 +6,7 @@ import { db } from '@/firebase/firebaseConfig';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 export default function CourseDetails() {
   const params = useParams();
@@ -60,13 +60,48 @@ export default function CourseDetails() {
   }
 
   return (
-    <div className="container mx-auto px-6 py-20">
-      <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">{course.title}</h1>
-      <p className="mb-4 text-gray-700 dark:text-gray-300">{course.description}</p>
-      <p className="mb-4 text-gray-700 dark:text-gray-300">Tipo: {course.isPaid ? 'Pago' : 'Gratuito'}</p>
-      <button onClick={handleEnroll} className="btn">
+    <motion.div
+      className="container mx-auto px-6 py-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.h1
+        className="text-4xl font-bold mb-6 text-white"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        {course.title}
+      </motion.h1>
+
+      <motion.p
+        className="text-lg text-gray-300 mb-6 leading-relaxed"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+      >
+        {course.description}
+      </motion.p>
+
+      <motion.p
+        className="text-lg text-gray-400 mb-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
+      >
+        Tipo: <span className={course.isPaid ? 'text-red-500' : 'text-green-500'}>{course.isPaid ? 'Pago' : 'Gratuito'}</span>
+      </motion.p>
+
+      <motion.button
+        onClick={handleEnroll}
+        className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition duration-300"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.6, duration: 0.6 }}
+      >
         Inscrever-se no Curso
-      </button>
-    </div>
+      </motion.button>
+    </motion.div>
   );
 }
