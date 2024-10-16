@@ -1,0 +1,41 @@
+/* custom-quill.css */
+
+/* Cor dos ícones da toolbar no modo escuro */
+.ql-toolbar {
+    background-color: #1f2937; /* Cor de fundo da toolbar (dark mode) */
+    border: none;
+  }
+  
+  .ql-toolbar button,
+  .ql-toolbar select {
+    color: #ffffff; /* Ícones e texto brancos */
+  }
+  
+  .ql-toolbar button:hover,
+  .ql-toolbar select:hover {
+    background-color: #374151; /* Cor de fundo ao passar o mouse */
+  }
+  
+  /* Customize as drop-downs */
+  .ql-snow .ql-picker {
+    color: white;
+  }
+  
+  .ql-snow .ql-picker-options {
+    background-color: #1f2937;
+  }
+  
+  .ql-snow .ql-picker-label:hover,
+  .ql-snow .ql-picker-item:hover {
+    color: #10b981; /* Cor de hover */
+  }
+  
+  .ql-container {
+    color: #ffffff; /* Texto branco dentro do editor */
+    background-color: #374151; /* Fundo do editor */
+  }
+  
+  .ql-editor {
+    color: #ffffff; /* Cor do texto dentro do editor */
+  }
+  
